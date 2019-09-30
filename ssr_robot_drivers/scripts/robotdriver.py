@@ -157,7 +157,7 @@ set_point = UDP_Handler("192.168.0.32", 3233)
 
 def main():
     rospy.init_node('listener', anonymous = True)
-    rospy.Subscriber("/dumper/cmd_vel", Twist, UDPSendMsg)
+    rospy.Subscriber("/cmd_vel", Twist, UDPSendMsg)
 
     rospy.spin()
 
