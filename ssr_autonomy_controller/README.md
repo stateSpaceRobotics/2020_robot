@@ -11,6 +11,3 @@ Include this node in one of your launch files:
 Available nodes are:
 * andy_demo.py
     * Launches the state machine for the andy demo
-
-* Total_State_Machine.py
-    * Launches the state machine for the three-robot system
