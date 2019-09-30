@@ -19,5 +19,5 @@
         <remap from="/move_base_simple/goal" to="/dumper/move_base_simple/goal" />
     </node>
 
-    <node name="robot_driver" pkg="robot_drivers" type="robotdriver.py" />
+    <node name="robot_driver" pkg="ssr_robot_drivers" type="robotdriver.py" />
 </launch>

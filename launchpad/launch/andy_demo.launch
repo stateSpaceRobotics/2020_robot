@@ -19,7 +19,7 @@
         <remap from="/move_base_simple/goal" to="/dumper/move_base_simple/goal" />
     </node>
 
-    <node name="robot_driver" pkg="robot_drivers" type="robotdriver.py" />
+    <node name="robot_driver" pkg="ssr_robot_drivers" type="robotdriver.py" />
 
 	<arg name = "home" default="/home/ssr" />
 	<node name="steamvr_interface_node" pkg="lighthouse_ros" type="steamvr_interface_node" launch-prefix="$(arg home)/.steam/ubuntu12_32/steam-runtime/run.sh" />
