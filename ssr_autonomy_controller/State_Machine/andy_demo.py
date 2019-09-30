@@ -72,7 +72,7 @@ def run_andy_main():
     # move_index = 0
     rospy.loginfo('Create Server')
     andy = actionlib.SimpleActionClient(
-        '/dumper/move_base', MoveBaseAction
+        '/move_base', MoveBaseAction
     )
     rospy.loginfo('Wait')
     andy.wait_for_server()
@@ -102,7 +102,7 @@ def run_andy_main():
             return drive_goal
 
         smach.StateMachine.add('Drive',
-                               smach_ros.SimpleActionState('/dumper/move_base',
+                               smach_ros.SimpleActionState('/move_base',
                                                            MoveBaseAction,
                                                            goal_cb = drive_goal_andy,
                                                            input_keys=['']), #N/A
@@ -127,7 +127,7 @@ def run_andy_main():
             return move_goal
 
         smach.StateMachine.add('Move1',
-                               smach_ros.SimpleActionState('/dumper/move_base',
+                               smach_ros.SimpleActionState('/move_base',
                                                            MoveBaseAction,
                                                            goal_cb = move1_goal_andy,
                                                            input_keys=['aruco_pose']), #N/A
@@ -153,7 +153,7 @@ def run_andy_main():
             return move_goal
 
         smach.StateMachine.add('Move2',
-                               smach_ros.SimpleActionState('/dumper/move_base',
+                               smach_ros.SimpleActionState('/move_base',
                                                            MoveBaseAction,
                                                            goal_cb = move2_goal_andy,
                                                            input_keys=['aruco_pose']), #N/A
@@ -178,7 +178,7 @@ def run_andy_main():
             return move_goal
 
         smach.StateMachine.add('Move3',
-                               smach_ros.SimpleActionState('/dumper/move_base',
+                               smach_ros.SimpleActionState('/move_base',
                                                            MoveBaseAction,
                                                            goal_cb = move3_goal_andy,
                                                            input_keys=['aruco_pose']), #N/A
