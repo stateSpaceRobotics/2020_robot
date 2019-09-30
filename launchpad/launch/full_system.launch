@@ -21,7 +21,7 @@
 
     <node pkg="ssr_navigation" type="launch_nav.py" name="navigation" output="screen" />
 
-    <node pkg="autonomy_controller" type="Total_State_Machine.py" name="state_machine" output="screen" />
+    <node pkg="ssr_autonomy_controller" type="Total_State_Machine.py" name="state_machine" output="screen" />
 
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ssr_launchpad)/multi_robot.rviz" />
 

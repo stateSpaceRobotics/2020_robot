@@ -2,7 +2,7 @@ use_sim_time: true
 
 rviz:
   enabled: true
-  package: "autonomy_controller"
+  package: "ssr_autonomy_controller"
   settings_file: "multi_robot.rviz"
 
 environment:
