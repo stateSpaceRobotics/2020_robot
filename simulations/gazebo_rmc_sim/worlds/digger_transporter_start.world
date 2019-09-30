@@ -683,7 +683,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/transporter/minibot_base_link.stl</uri>
+              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/transporter/minibot_base_link.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -710,7 +710,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/transporter/minibot_frame_collision.stl</uri>
+              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/transporter/minibot_frame_collision.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -782,7 +782,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/transporter/minibot_wheel.stl</uri>
+              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/transporter/minibot_wheel.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -881,7 +881,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/transporter/minibot_wheel.stl</uri>
+              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/transporter/minibot_wheel.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -980,7 +980,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/transporter/minibot_wheel.stl</uri>
+              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/transporter/minibot_wheel.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -1079,7 +1079,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/transporter/minibot_wheel.stl</uri>
+              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/transporter/minibot_wheel.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -1314,7 +1314,7 @@
           <pose frame=''>0 0 0 1.5708 0 -1.5708</pose>
           <geometry>
             <mesh>
-              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/Digger/Simple_Chassis.stl</uri>
+              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/Digger/Simple_Chassis.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
@@ -1341,7 +1341,7 @@
           <pose frame=''>0 0 0 1.5708 0 -1.5708</pose>
           <geometry>
             <mesh>
-              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/Digger/Simple_Chassis.stl</uri>
+              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/Digger/Simple_Chassis.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
@@ -1413,7 +1413,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/Digger/Simple_Arm.stl</uri>
+              <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/Digger/Simple_Arm.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>

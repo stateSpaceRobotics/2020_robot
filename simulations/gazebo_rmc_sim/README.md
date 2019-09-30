@@ -1,4 +1,4 @@
-# gazebo_rmc_sim
+# ssr_gazebo
 
 This package provides simulations for use in gazebo.
 

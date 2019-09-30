@@ -22,7 +22,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
-            <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/transporter/minibot_base_link.stl</uri>
+            <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/transporter/minibot_base_link.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -48,7 +48,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
-            <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/transporter/minibot_frame_collision.stl</uri>
+            <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/transporter/minibot_frame_collision.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -119,7 +119,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
-            <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/transporter/minibot_wheel.stl</uri>
+            <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/transporter/minibot_wheel.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -217,7 +217,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
-            <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/transporter/minibot_wheel.stl</uri>
+            <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/transporter/minibot_wheel.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -315,7 +315,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
-            <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/transporter/minibot_wheel.stl</uri>
+            <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/transporter/minibot_wheel.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -413,7 +413,7 @@
         <pose frame=''>0 0 0 0 -0 0</pose>
         <geometry>
           <mesh>
-            <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/gazebo_rmc_sim/models/transporter/minibot_wheel.stl</uri>
+            <uri>/home/ssr/ros_kinetic/rmc_dev_ws/src/2018_robot/simulations/ssr_gazebo/models/transporter/minibot_wheel.stl</uri>
           </mesh>
         </geometry>
         <material>
