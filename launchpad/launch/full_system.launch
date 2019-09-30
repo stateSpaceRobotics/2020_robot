@@ -1,6 +1,6 @@
 <launch>
     <master auto="start" />
-    <rosparam file="$(find robot_config)/globals/multi_bot_stage_map_server_fake_localization.yaml" command="load" />
+    <rosparam file="$(find ssr_robot_config)/globals/multi_bot_stage_map_server_fake_localization.yaml" command="load" />
 
     <arg name="stage_sim" default="multi_bot_obstacles" />
 

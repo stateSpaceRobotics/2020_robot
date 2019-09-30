@@ -1,6 +1,6 @@
 <launch>
     <master auto="start" />
-    <rosparam file="$(find robot_config)/globals/andy_demo.yaml" command="load" />
+    <rosparam file="$(find ssr_robot_config)/globals/andy_demo.yaml" command="load" />
 
     <arg name="stage_sim" default="single_bot_empty" />
 

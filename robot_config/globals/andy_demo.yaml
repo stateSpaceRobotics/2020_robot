@@ -12,7 +12,7 @@ robots:
     vive_frame: "device01"
 
     move_base:
-      config_package: "robot_config"
+      config_package: "ssr_robot_config"
       config_path: "stage/dumper"
 
     localization:

@@ -29,7 +29,7 @@ robots:
     base_frame: "base_link"
 
     move_base:
-      config_package: "robot_config"
+      config_package: "ssr_robot_config"
       config_path: "stage/dumper"
 
     localization:
