@@ -35,8 +35,8 @@ define topurg ranger
   size [ 0.05 0.05 0.1 ]
 )
 
-# Create the dumper robot model
-define dumper position
+# Create the robot model
+define robot position
 (
   #localization "odom"
   localization_origin [0 0 0 0]

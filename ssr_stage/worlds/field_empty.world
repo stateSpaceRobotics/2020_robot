@@ -9,9 +9,7 @@ include "map.inc"
 include "obstacle.inc"
 
 # Include robot models
-include "transporter.inc"
-include "dumper.inc"
-include "digger.inc"
+include "robot.inc"
 
 # Load collector trough
 collector_trough( pose [3.451 1.345 0 0] color "brown")
