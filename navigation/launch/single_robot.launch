@@ -35,13 +35,13 @@
             <rosparam file="$(eval find(move_base_config_package) + '/' + move_base_config_path + '/base_local_planner_params.yaml')" command="load" />
         </node>
 
-        <node pkg="multi_robot_path_planner" type="Recovery_State_Machine.py" name="move_base_recovery" output="screen">
+        <node pkg="ssr_navigation" type="Recovery_State_Machine.py" name="move_base_recovery" output="screen">
             <rosparam param="topic" subst_value="True">/$(arg namespace)/move_base</rosparam>
             <rosparam param="base_frame" subst_value="True">/$(arg base_frame)</rosparam>
         </node>
 
         <!-- Robot Localization -->
-        <include file="$(find multi_robot_path_planner)/move_base_config/robot_localization.xml" if="$(eval arg('localization_package') == 'robot_localization')">
+        <include file="$(find ssr_navigation)/move_base_config/robot_localization.xml" if="$(eval arg('localization_package') == 'robot_localization')">
             <arg name="map_frame"       value="$(arg map_frame)" />
             <arg name="odom_frame"      value="$(arg odom_frame)" />
             <arg name="base_link_frame" value="$(arg vive_frame)" />
@@ -51,7 +51,7 @@
         </include>
 
         <!-- Fake Localization-->
-        <include file="$(find multi_robot_path_planner)/move_base_config/fake_localization_node.xml" if="$(eval arg('localization_package') == 'fake_localization')">
+        <include file="$(find ssr_navigation)/move_base_config/fake_localization_node.xml" if="$(eval arg('localization_package') == 'fake_localization')">
             <arg name="scan_topic"          value="$(arg scan_topic)" />
             <arg name="global_frame_id"     value="$(arg map_frame)" />
             <arg name="map_topic"           value="$(arg map_topic)" />

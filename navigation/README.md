@@ -1,4 +1,4 @@
-# multi_robot_path_planner
+# ssr_navigation
 This ROS catkin package implements a node that performs single- or multi-robot pathfinding on an obstacle map. It is currently a work in progress.
 
 ### Installing dependencies
@@ -8,12 +8,12 @@ rosdep install --from-paths ./ --ignore-src --rosdistro=kinetic
 ```
 
 ### Architecture of Project (along with 2019_robot)
-The following two architecture diagrams show which packages launch which other packages and what they do. In the current architecture, multi_robot_path_planner provides many things that should be handled by 2019_robot. The proposed architecture moves these to 2019_robot in order to be more modular and focused on only navigation in this package.
+The following two architecture diagrams show which packages launch which other packages and what they do. In the current architecture, ssr_navigation provides many things that should be handled by 2019_robot. The proposed architecture moves these to 2019_robot in order to be more modular and focused on only navigation in this package.
 
 Current Architecture:
 ```
 2019_robot
-├── multi_robot_path_planner (provides robot configurations)
+├── ssr_navigation (provides robot configurations)
 │   ├── map servers or gmapping (provides map or package to build map)
 │   ├── stage simulation (simulates real robots and obstacles)
 │   ├── move_base, move_base_recovery (provides server to send movement commands to)
@@ -28,7 +28,7 @@ Proposed Architecture:
 2019_robot (provides robot configurations)
 ├── stage simulation or real robot initialization
 ├── rviz
-├── multi_robot_path_planner
+├── ssr_navigation
 │   ├── map servers or gmapping
 │   ├── move_base, move_base_recovery
 │   ├── amcl or fake localization
@@ -39,7 +39,7 @@ Proposed Architecture:
 ### Folders and Files in this Repository
 
 ```
-multi_robot_path_planner
+ssr_navigation
 ├── CMakeLists.txt
 ├── launch
 │   ├── multi_bot_stage.launch
@@ -73,9 +73,9 @@ multi_robot_path_planner
 │   └── Recovery_State_Machine.py
 ├── single_robot.rviz
 └── src
-    ├── multi_robot_path_planner_digger_node.cpp
-    ├── multi_robot_path_planner_dumper_node.cpp
-    └── multi_robot_path_planner_transporter_node.cpp
+    ├── ssr_navigation_digger_node.cpp
+    ├── ssr_navigation_dumper_node.cpp
+    └── ssr_navigation_transporter_node.cpp
 ```
 
  - CMakeLists.txt: This file controls how catkin builds the package to be used by ROS. Editted rarely. Details in the [wiki](http://wiki.ros.org/catkin/CMakeLists.txt).
@@ -100,7 +100,7 @@ multi_robot_path_planner
     - Recovery_State_Machine.py: This creates a state machine that generates a goal close to the robot to use as a recovery behavior. If a robot gets stuck, it will attempt to move to this new closer goal and then resume navigation. This can repeat many times before becoming unstuck. In its current implementation, this is called from the 2019_robot state machine.
  - single_robot.rviz: A set of settins for rviz to use when navigating with a single robot.
  - src: Source files for nodes.
-    - multi_robot_path_planner_(digger/dumper/transporter)_node.cpp: These nodes send commands to move the corresponding robot. This is only used for testing that movement works.
+    - ssr_navigation_(digger/dumper/transporter)_node.cpp: These nodes send commands to move the corresponding robot. This is only used for testing that movement works.
 
 ### Launching this package
 

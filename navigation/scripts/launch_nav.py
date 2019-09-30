@@ -9,7 +9,7 @@ def navigation_node():
 
     # NAV_NAMESPACE = '/navigation'
     ROBOT_NAMESPACE = '/robots'
-    PACKAGE_NAME = 'multi_robot_path_planner'
+    PACKAGE_NAME = 'ssr_navigation'
     cli_args = []
 
     # Get params from parameter server

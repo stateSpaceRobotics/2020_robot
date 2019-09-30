@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(multi_robot_path_planner)
+project(ssr_navigation)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -110,7 +110,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES multi_robot_path_planner
+#  LIBRARIES ssr_navigation
 #  CATKIN_DEPENDS actionlib base_local_planner global_planner move_base move_base_msgs nav_core nav_msgs rotate_recovery std_msgs
 #  DEPENDS system_lib
 )
@@ -128,7 +128,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/multi_robot_path_planner.cpp
+#   src/${PROJECT_NAME}/ssr_navigation.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -139,9 +139,9 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME}_dumper_node src/multi_robot_path_planner_dumper_node.cpp)
-add_executable(${PROJECT_NAME}_digger_node src/multi_robot_path_planner_digger_node.cpp)
-add_executable(${PROJECT_NAME}_transporter_node src/multi_robot_path_planner_transporter_node.cpp)
+add_executable(${PROJECT_NAME}_dumper_node src/ssr_navigation_dumper_node.cpp)
+add_executable(${PROJECT_NAME}_digger_node src/ssr_navigation_digger_node.cpp)
+add_executable(${PROJECT_NAME}_transporter_node src/ssr_navigation_transporter_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -206,7 +206,7 @@ target_link_libraries(${PROJECT_NAME}_transporter_node
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_multi_robot_path_planner.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_ssr_navigation.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
