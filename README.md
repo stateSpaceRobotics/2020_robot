@@ -1,8 +1,9 @@
-# 2018_robot
-This contains drivers, state machines, and simulation files specific to the 2018 robot. In addition, other in-house libraries are included as submodules, resulting in the entirety of the code used for 2018 being referenced here.
+# 2020_robot
+
+This repo contains a set of ROS packages used for the Mississippi State Space Robotics team's robotic system. It is heavily WIP and contains some dead code from previous years.
 
 # Running the code
 
 ```sh
-roslaunch autonomy_controller statespace.launch
+roslaunch ssr_launchpad andy_demo.launch
 ```
