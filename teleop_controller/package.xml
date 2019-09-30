@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>teleop_controller</name>
+  <name>ssr_teleop</name>
   <version>0.0.0</version>
   <description>The TeleopInterface package</description>
 

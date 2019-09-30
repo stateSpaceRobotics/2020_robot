@@ -9,6 +9,6 @@
         <param name = "dev" type = "string" value = "/dev/input/js1"/>
         <param name = "autorepeat_rate" value = "5"/>
     </node>
-    <node pkg = "teleop_controller" name = "teleop_controller" type = "TeleopInterface.py" output = "screen">
+    <node pkg = "ssr_teleop" name = "ssr_teleop" type = "TeleopInterface.py" output = "screen">
     </node>
 </launch>
