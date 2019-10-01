@@ -1,0 +1,22 @@
+resolution 0.02 # set the resolution of the underlying raytrace model in meters
+interval_sim 100 # simulation timestep in milliseconds
+#interval_real 100
+
+# Include map (defines and loads mining map)
+include "map.inc"
+
+# Include obstacle models
+include "obstacle.inc"
+
+# Include robot models
+include "camera_bot.inc"
+
+# Load collector trough
+collector_trough( pose [3.451 1.345 0 0] color "brown")
+
+# Instantiate a robot
+camera_bot( pose [0.945 0.75 0 0] name "camera_bot" color "red")
+
+# Load obstacles here
+# Example:
+# obstacle( pose [1.5852 0 0 0] color "black")
