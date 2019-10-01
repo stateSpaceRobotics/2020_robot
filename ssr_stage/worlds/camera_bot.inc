@@ -9,7 +9,9 @@ define d435i camera
     pantilt [ 0.0 0.0 ]
 
     # model properties
-    size [ 0.025 0.09 0.025 ]
+    # the camera's model is interfering with itself, so I used 0 as the size
+    # size [ 0.025 0.09 0.025 ]
+    size [ 0.0 0.0 0.0 ]
     color "black"
     watts 100.0 # TODO find watts
 )
@@ -44,6 +46,6 @@ define camera_bot position
     gui_nose 1
     
     # add a camera sensor
-    d435i(pose [ 0.45 0.000 0.1 0.000 ])
+    d435i(pose [ 1 0.000 1 0.000 ])
 )
 
