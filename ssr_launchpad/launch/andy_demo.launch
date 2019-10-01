@@ -1,10 +1,10 @@
 <launch>
     <master auto="start" />
-    <rosparam file="$(find ssr_robot_config)/globals/andy_demo.yaml" command="load" />
+    <param name="/use_sim_time" value="true"/>
 
     <arg name="stage_sim" default="single_bot_empty" />
 
-    <!-- <include file="$(find ssr_stage)/launch/$(arg stage_sim).launch"/> -->
+    <include file="$(find ssr_stage)/launch/$(arg stage_sim).launch"/>
 
     <arg name="map_file"    default="stage_empty.yaml" />
 
@@ -12,21 +12,22 @@
         <param name="frame_id" value="/map" />
         <remap from="map" to="/map" />
     </node>
+    
+    <include file="$(find ssr_navigation)/launch/single_robot.launch">
+        <arg name="map_topic" value="/map"/>
+        <arg name="move_base_config_package" value="ssr_robot_config"/>
+        <arg name="move_base_config_path" value="stage/andy"/>
+        <arg name="localization_package" value="fake_localization"/>
+        <arg name="localization_footprint_frame" value="base_footprint"/>
+        <arg name="scan_topic" value="/base_scan"/>
+        <arg name="map_frame" value="map"/>
+        <arg name="odom_frame" value="odom"/>
+        <arg name="base_frame" value="base_link"/>
+    </include>
 
-    <node pkg="ssr_navigation" type="launch_nav.py" name="navigation" output="screen" />
-
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ssr_launchpad)/single_robot.rviz" >
-        <remap from="/move_base_simple/goal" to="/dumper/move_base_simple/goal" />
-    </node>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ssr_launchpad)/single_robot.rviz" />
 
     <node name="robot_driver" pkg="ssr_robot_drivers" type="robotdriver.py" />
-
-	<arg name = "home" default="/home/ssr" />
-	<node name="steamvr_interface_node" pkg="lighthouse_ros" type="steamvr_interface_node" launch-prefix="$(arg home)/.steam/ubuntu12_32/steam-runtime/run.sh" />
-	<node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_broadcaster_base" args="0 0 0 0 0 0.707 0.707 device01 base_link" />
-	<node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_broadcaster" args="0.0635 -0.0254 -0.1905 0 0 0 1 base_link base_footprint" />
-        <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_broadcaster_lighthouse" args="3.63856 1.14935 0.81280 0.5 0.5 0.5 0.5 map lighthouse_01" />
-    <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_broadcaster_odom" args="0 0 0 0 0 0 1 map odom" />
 
     <node pkg="ssr_autonomy_controller" type="andy_demo.py" name="state_machine" output="screen" />
 </launch>

@@ -1,5 +1,4 @@
 <launch>
-    <arg name="namespace" />
     <arg name="initial_pose_x"      default="0" />
     <arg name="initial_pose_y"      default="0" />
     <arg name="initial_pose_a"      default="0" />
@@ -13,50 +12,42 @@
     <arg name="odom_frame" />
     <arg name="base_frame" />
     <arg name="vive_frame" />
-    <!-- <arg name="tf_prefix" /> -->
 
-    <group ns="$(arg namespace)">
-        <!-- Move Base -->
-        <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-            <remap from="map" to="$(arg map_topic)" />
+    <!-- Move Base -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <param name="controller_frequency"          value="20.0" />
+        <param name="base_global_planner"           value="global_planner/GlobalPlanner" />
+        <param name="base_local_planner"            value="base_local_planner/TrajectoryPlannerROS"/>
+        <param name="recovery_behavior_enabled"     value="False"/>
 
-            <param name="controller_frequency"          value="20.0" />
-            <param name="base_global_planner"           value="global_planner/GlobalPlanner" />
-            <param name="base_local_planner"            value="base_local_planner/TrajectoryPlannerROS"/>
-            <param name="recovery_behavior_enabled"     value="False"/>
+        <rosparam param="robot_base_frame" subst_value="True" ns="global_costmap" >/$(arg localization_footprint_frame)</rosparam>
+        <rosparam param="robot_base_frame" subst_value="True" ns="local_costmap" >/$(arg localization_footprint_frame)</rosparam>
 
-            <rosparam param="robot_base_frame" subst_value="True" ns="global_costmap" >/$(arg localization_footprint_frame)</rosparam>
-            <rosparam param="robot_base_frame" subst_value="True" ns="local_costmap" >/$(arg localization_footprint_frame)</rosparam>
+        <rosparam file="$(eval find(move_base_config_package) + '/' + move_base_config_path + '/costmap_common_params.yaml')" command="load" ns="global_costmap" />
+        <rosparam file="$(eval find(move_base_config_package) + '/' + move_base_config_path + '/costmap_common_params.yaml')" command="load" ns="local_costmap" />
+        <rosparam file="$(eval find(move_base_config_package) + '/' + move_base_config_path + '/local_costmap_params.yaml')" command="load" />
+        <rosparam file="$(eval find(move_base_config_package) + '/' + move_base_config_path + '/global_costmap_params.yaml')" command="load" />
+        <rosparam file="$(eval find(move_base_config_package) + '/' + move_base_config_path + '/base_local_planner_params.yaml')" command="load" />
+    </node>
 
-            <rosparam file="$(eval find(move_base_config_package) + '/' + move_base_config_path + '/costmap_common_params.yaml')" command="load" ns="global_costmap" />
-            <rosparam file="$(eval find(move_base_config_package) + '/' + move_base_config_path + '/costmap_common_params.yaml')" command="load" ns="local_costmap" />
-            <rosparam file="$(eval find(move_base_config_package) + '/' + move_base_config_path + '/local_costmap_params.yaml')" command="load" />
-            <rosparam file="$(eval find(move_base_config_package) + '/' + move_base_config_path + '/global_costmap_params.yaml')" command="load" />
-            <rosparam file="$(eval find(move_base_config_package) + '/' + move_base_config_path + '/base_local_planner_params.yaml')" command="load" />
-        </node>
+    <!-- <node pkg="ssr_navigation" type="Recovery_State_Machine.py" name="move_base_recovery" output="screen">
+        <rosparam param="topic" subst_value="True">/move_base</rosparam>
+        <rosparam param="base_frame" subst_value="True">/$(arg base_frame)</rosparam>
+    </node> -->
 
-        <node pkg="ssr_navigation" type="Recovery_State_Machine.py" name="move_base_recovery" output="screen">
-            <rosparam param="topic" subst_value="True">/$(arg namespace)/move_base</rosparam>
-            <rosparam param="base_frame" subst_value="True">/$(arg base_frame)</rosparam>
-        </node>
+    <!-- Fake Localization -->
+    <include file="$(find ssr_navigation)/move_base_config/fake_localization_node.xml" if="$(eval arg('localization_package') == 'fake_localization')">
+        <arg name="scan_topic"          value="$(arg scan_topic)" />
+        <arg name="global_frame_id"     value="$(arg map_frame)" />
+        <arg name="odom_frame_id"       value="$(arg odom_frame)" />
+        <arg name="base_frame_id"       value="$(arg base_frame)" />
+    </include>
 
-        <!-- Robot Localization -->
-        <include file="$(find ssr_navigation)/move_base_config/robot_localization.xml" if="$(eval arg('localization_package') == 'robot_localization')">
-            <arg name="map_frame"       value="$(arg map_frame)" />
-            <arg name="odom_frame"      value="$(arg odom_frame)" />
-            <arg name="base_link_frame" value="$(arg vive_frame)" />
-            <arg name="world_frame"     value="$(arg odom_frame)" />
-            <arg name="vive_topic"      value="$(arg scan_topic)" />
-            <arg name="node_name"       value="rl1" />
-        </include>
-
-        <!-- Fake Localization-->
-        <include file="$(find ssr_navigation)/move_base_config/fake_localization_node.xml" if="$(eval arg('localization_package') == 'fake_localization')">
-            <arg name="scan_topic"          value="$(arg scan_topic)" />
-            <arg name="global_frame_id"     value="$(arg map_frame)" />
-            <arg name="map_topic"           value="$(arg map_topic)" />
-            <arg name="odom_frame_id"       value="$(arg odom_frame)" />
-            <arg name="base_frame_id"       value="$(arg base_frame)" />
-        </include>
-    </group>
+    <!-- Gmapping -->
+    <include file="$(find ssr_navigation)/move_base_config/slam_gmapping.xml" if="$(eval arg('localization_package') == 'slam_gmapping')">
+        <arg name="scan_topic"    value="$(arg scan_topic)" />
+        <arg name="map_topic"     value="$(arg map_topic)" />
+        <arg name="map_frame"     value="$(arg map_frame)" />
+        <arg name="odom_frame"    value="$(arg odom_frame)" />
+    </include>
 </launch>
