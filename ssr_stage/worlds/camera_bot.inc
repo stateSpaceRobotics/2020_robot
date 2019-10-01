@@ -46,6 +46,6 @@ define camera_bot position
     gui_nose 1
     
     # add a camera sensor
-    d435i(pose [ 1 0.000 1 0.000 ])
+    d435i(pose [ 0.35 0.000 0.2 0.000 ])
 )
 
