@@ -1,0 +1,35 @@
+<launch>
+    <master auto="start" />
+    <param name="/use_sim_time" value="true"/>
+
+    <arg name="stage_sim" default="ranger_bot_empty" />
+
+    <include file="$(find ssr_stage)/launch/stage_remapped.launch">
+        <arg name="world" value="$(arg stage_sim)" />
+    </include>
+
+    <!-- <arg name="map_file"    default="stage_empty.yaml" />
+
+    <node pkg="map_server" type="map_server" name="map_server" args="$(find ssr_stage)/maps/$(arg map_file)" respawn="false" >
+        <param name="frame_id" value="/map" />
+        <remap from="map" to="/map" />
+    </node> -->
+    
+    <include file="$(find ssr_navigation)/launch/single_robot.launch">
+        <arg name="map_topic" value="/map"/>
+        <arg name="move_base_config_package" value="ssr_robot_config"/>
+        <arg name="move_base_config_path" value="stage/andy_gmapping"/>
+        <arg name="localization_package" value="slam_gmapping"/>
+        <arg name="localization_footprint_frame" value="base_footprint"/>
+        <arg name="scan_topic" value="/base_scan"/>
+        <arg name="map_frame" value="map"/>
+        <arg name="odom_frame" value="odom"/>
+        <arg name="base_frame" value="base_link"/>
+    </include>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ssr_launchpad)/single_robot.rviz" />
+
+    <node name="robot_driver" pkg="ssr_robot_drivers" type="robotdriver.py" />
+
+    <!-- <node pkg="ssr_autonomy_controller" type="andy_demo.py" name="state_machine" output="screen" /> -->
+</launch>
