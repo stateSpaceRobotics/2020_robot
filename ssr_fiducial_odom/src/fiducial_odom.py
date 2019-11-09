@@ -12,7 +12,7 @@ def fiducialTransformCallback(fid_transforms):
         odom_msg = Odometry()
         odom_msg.header.stamp = fid_transforms.header.stamp
         odom_msg.header.frame_id = fid_transforms.header.frame_id
-        odom_msg.child_frame_id = "fiducial_" + str(transform.fiducial_id)
+        odom_msg.child_frame_id = "fid" + str(transform.fiducial_id)
         odom_msg.pose.pose = Pose(Point(transform.transform.translation.x, transform.transform.translation.y, transform.transform.translation.z), transform.transform.rotation)
         odomPublisher.publish(odom_msg)
 
