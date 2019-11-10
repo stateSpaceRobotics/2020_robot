@@ -1,20 +1,17 @@
 #!/usr/bin/env python
 
 import rospy
-from geometry_msgs.msg import PoseWithCovariance, Point, Quaternion, Pose
+from geometry_msgs.msg import PoseWithCovariance, Point, Quaternion, Pose, PoseWithCovarianceStamped
 from nav_msgs.msg import Odometry
 from fiducial_msgs.msg import FiducialTransformArray
 
-def fiducialTransformCallback(fid_transforms):
+def fiducialTransformCallback(fid_transform):
 
-    for transform in fid_transforms.transforms:
-
-        odom_msg = Odometry()
-        odom_msg.header.stamp = fid_transforms.header.stamp
-        odom_msg.header.frame_id = fid_transforms.header.frame_id
-        odom_msg.child_frame_id = "fid" + str(transform.fiducial_id)
-        odom_msg.pose.pose = Pose(Point(transform.transform.translation.x, transform.transform.translation.y, transform.transform.translation.z), transform.transform.rotation)
-        odomPublisher.publish(odom_msg)
+    odom_msg = Odometry()
+    odom_msg.header = fid_transform.header
+    odom_msg.child_frame_id = "camera_link"
+    odom_msg.pose = fid_transform.pose
+    odomPublisher.publish(odom_msg)
 
 odomPublisher = 0
 
@@ -22,7 +19,7 @@ def main():
     global odomPublisher
 
     rospy.init_node('listener', anonymous = True)
-    rospy.Subscriber("/fiducial_transforms", FiducialTransformArray, fiducialTransformCallback)
+    rospy.Subscriber("/fiducial_pose", PoseWithCovarianceStamped, fiducialTransformCallback)
     odomPublisher = rospy.Publisher('/fiducials/odom', Odometry, queue_size=50)
 
     rospy.spin()
