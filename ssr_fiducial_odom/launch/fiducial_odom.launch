@@ -8,18 +8,21 @@
     <!-- <node pkg="tf" type="static_transform_publisher" name="map" args="0 0 0 0 0 0 1 odom base_link 100"/> -->
     <!-- <node pkg="tf" type="static_transform_publisher" name="base_link" args="0 0 0 0 0 0 1 base_link camera 100" /> -->
 
-    <!-- <node pkg = "ssr_fiducial_odom" name = "fiducial_odom" type = "fiducial_odom.py" output = "screen"/> -->
+    <node pkg = "ssr_fiducial_odom" name = "fiducial_odom" type = "fiducial_odom.py" output = "screen"/> 
 
     <!-- <include file="$find(ssr_fiducial_odom)/launch/camera.launch" /> -->
 
+    
     <include file="$(find aruco_detect)/launch/aruco_detect.launch">
       <arg name="camera" value="$(arg camera_ns)" />
       <arg name="image" value="$(arg image_topic)"/>
     </include>
-
+    
+    <!--
     <include file="$(find fiducial_slam)/launch/fiducial_slam.launch" >
       <arg name="base_frame" value="camera_link" />
       <arg name="odom_frame" value="odom" />
       <arg name="publish_6dof_pose" value="true" />
     </include>
+    -->
 </launch>

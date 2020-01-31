@@ -1,0 +1,17 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/ros/ros_workspaces/realsense_ws/install/include/**",
+        "/opt/ros/kinetic/include/**",
+        "/home/ros/ros_workspaces/realsense_ws/devel/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ]
+}
