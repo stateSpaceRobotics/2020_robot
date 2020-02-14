@@ -29,7 +29,7 @@ class RobotInterface:
     controller2_interface_select_toggle_time = 0
     artificial_delay_enabled = False
 
-    controller1_outstring = ""
+    outstring = ""
     controller2_outstring = ""
 
     controller1_outstring_changed = True
@@ -38,8 +38,11 @@ class RobotInterface:
     def __init__(self, ip):
 
         #Dictionaries for Controller State array accessing
-        self.buttons =  { "A" : 0, "B" : 1, "X" : 2, "Y" : 3, "LB" : 4, "RB" : 5, "BACK" : 6, "START" : 7, "POWER" : 8, "L3" : 9, "R3" : 10 }
-        self.axes =     { "LS_LEFT_RIGHT" : 0, "LS_UP_DOWN" : 1, "LT" : 2, "RS_LEFT_RIGHT" : 3, "RS_UP_DOWN" : 4, "RT" : 5, "DPAD_LEFT_RIGHT" : 6, "DPAD_UP_DOWN" : 7 }
+        #self.buttons =  { "A" : 0, "B" : 1, "X" : 2, "Y" : 3, "LB" : 4, "RB" : 5, "BACK" : 6, "START" : 7, "POWER" : 8, "L3" : 9, "R3" : 10 }
+        #self.axes =     { "LS_LEFT_RIGHT" : 0, "LS_UP_DOWN" : 1, "LT" : 2, "RS_LEFT_RIGHT" : 3, "RS_UP_DOWN" : 4, "RT" : 5, "DPAD_LEFT_RIGHT" : 6, "DPAD_UP_DOWN" : 7 }
+
+        self.buttons =   {"Trigger" : 0, "A" : 1, "B" : 2, "C" : 3, "D" : 4, "Flip" : 5, "H1_UP" : 6, "H1_RIGHT" : 7, "H1_DOWN" : 8, "H1_LEFT" : 9, "H2_UP" : 10, "H2_RIGHT" : 11, "H2_DOWN" : 12, "H2_LEFT" : 13, "NOT_USED_14" : 14, "NOT_USED_15" : 15, "NOT_USED_16" : 16}
+        self.axes =      {"Drive_X" : 0, "Drive_Y": 1, "Twist" : 2, "POV_X" : 3, "POV_Y" : 4}
 
         #values for gaussian sampling for artificial latency
         self.mu = 0.5
@@ -209,11 +212,11 @@ class DiggerInterface(RobotInterface):
             return
 
         #Handle changing of bucket speed
-        if controller_state.axes[self.axes["DPAD_LEFT_RIGHT"]] != 0:
+        if controller_state.buttons[self.buttons["DPAD_RIGHT"]]:
             duration = rospy.Time.now() - self.__dig_speed_toggle_time
 
             if duration.to_sec() > 0.250:
-                if controller_state.axes[self.axes["DPAD_LEFT_RIGHT"]] == -1:
+                if controller_state.buttons[self.buttons["DPAD_RIGHT"]]:
                     self.__bucket_motor_speed += self.__bucket_motor_increment_value
                     if self.__bucket_motor_speed > self.__bucket_motor_max_speed:
                         self.__bucket_motor_speed = self.__bucket_motor_max_speed
@@ -231,7 +234,7 @@ class DiggerInterface(RobotInterface):
                     RobotInterface.controller2_outstring_changed = True
 
         #Activate the bucket ladder
-        if controller_state.buttons[self.buttons["X"]]:
+        if controller_state.buttons[self.buttons["A"]]:
             duration = rospy.Time.now() - self.__digging_toggle_time
 
             if duration.to_sec() > 1:
@@ -239,7 +242,7 @@ class DiggerInterface(RobotInterface):
                 self.__digging_toggle_time = rospy.Time.now()
 
         #Invert the front actuators
-        if controller_state.buttons[self.buttons["LB"]]:
+        if controller_state.buttons[self.buttons["POV_DOWN"]]:
             duration = rospy.Time.now() - self.__front_actuator_toggle_time
 
             if duration.to_sec() > 1:
@@ -247,7 +250,7 @@ class DiggerInterface(RobotInterface):
                 self.__front_actuator_toggle_time = rospy.Time.now()
 
         #Invert the back actuators
-        if controller_state.buttons[self.buttons["RB"]]:
+        if controller_state.buttons[self.buttons["POV_DOWN"]]:
             duration = rospy.Time.now() - self.__back_actuator_toggle_time
 
             if duration.to_sec() > 1:
@@ -255,7 +258,7 @@ class DiggerInterface(RobotInterface):
                 self.__back_actuator_toggle_time = rospy.Time.now()
 
         #Toggle the conveyor belt
-        if controller_state.buttons[self.buttons["B"]]:
+        if controller_state.buttons[self.buttons["C"]]:
             duration = rospy.Time.now() - self.__conveyor_toggle_time
 
             if duration.to_sec() > 1:
@@ -263,7 +266,7 @@ class DiggerInterface(RobotInterface):
                 self.__conveyor_toggle_time = rospy.Time.now()
 
         #Toggle conveyor belt sifting back and forth
-        if controller_state.buttons[self.buttons["A"]]:
+        if controller_state.buttons[self.buttons["Flip"]]:
             duration = rospy.Time.now() - self.__sifting_toggle_time
 
             if duration.to_sec() > 1:
@@ -301,15 +304,15 @@ class DiggerInterface(RobotInterface):
                 rospy.loginfo("\n\n" + RobotInterface.controller1_outstring + "\n\n" + RobotInterface.controller2_outstring)
 
         #Build the message to send over UDP
-        message = str(self.FRONT_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["LS_UP_DOWN"]]) + "\n"
-        message += str(self.BACK_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["LS_UP_DOWN"]]) + "\n"
-        message += str(self.FRONT_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["RS_UP_DOWN"]]) + "\n"
-        message += str(self.BACK_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["RS_UP_DOWN"]]) + "\n"
+        message = str(self.FRONT_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["Drive_Y"]]) + "\n"
+        message += str(self.BACK_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["Drive_Y"]]) + "\n"
+        message += str(self.FRONT_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["Drive_Y"]] * -1) + "\n"
+        message += str(self.BACK_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["Drive_Y"]] * -1) + "\n"
 
-        message += str(self.FRONT_LEFT_ACTUATOR) + "," + str(self.__actuator_midpoint + self.__actuator_increment_value * ((controller_state.axes[self.axes["LT"]] - 1) / -2) * self.__front_actuator_inversion) + "\n"
-        message += str(self.FRONT_RIGHT_ACTUATOR) + "," + str(self.__actuator_midpoint + self.__actuator_increment_value * ((controller_state.axes[self.axes["LT"]] - 1) / -2) * self.__front_actuator_inversion) + "\n"
-        message += str(self.BACK_LEFT_ACTUATOR) + "," + str(self.__actuator_midpoint + self.__actuator_increment_value * ((controller_state.axes[self.axes["RT"]] - 1) / -2) * self.__back_actuator_inversion) + "\n"
-        message += str(self.BACK_RIGHT_ACTUATOR) + "," + str(self.__actuator_midpoint + self.__actuator_increment_value * ((controller_state.axes[self.axes["RT"]] - 1) / -2) * self.__back_actuator_inversion) + "\n"
+        message += str(self.FRONT_LEFT_ACTUATOR) + "," + str(self.__actuator_midpoint + self.__actuator_increment_value * ((controller_state.buttons[self.buttons["B"]] - 1) / -2) * self.__front_actuator_inversion) + "\n"
+        message += str(self.FRONT_RIGHT_ACTUATOR) + "," + str(self.__actuator_midpoint + self.__actuator_increment_value * ((controller_state.buttons[self.buttons["B"]] - 1) / -2) * self.__front_actuator_inversion) + "\n"
+        message += str(self.BACK_LEFT_ACTUATOR) + "," + str(self.__actuator_midpoint + self.__actuator_increment_value * ((controller_state.buttons[self.buttons["B"]] - 1) / -2) * self.__back_actuator_inversion) + "\n"
+        message += str(self.BACK_RIGHT_ACTUATOR) + "," + str(self.__actuator_midpoint + self.__actuator_increment_value * ((controller_state.buttons[self.buttons["B"]] - 1) / -2) * self.__back_actuator_inversion) + "\n"
 
 
         message += str(self.BUCKET_MOTOR) + "," + str(self.__bucket_motor_midpoint - self.__bucket_motor_speed * self.__is_digging) + "\n"
@@ -477,15 +480,15 @@ class DumperInterface(RobotInterface):
         #rospy.loginfo("Controller (" + str(controller_id) + ") Selected Robot: " + str(self.__my_name))
 
         #Build the message to send over UDP
-        message = str(self.FRONT_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["LS_UP_DOWN"]]) + "\n"
-        message += str(self.BACK_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["LS_UP_DOWN"]]) + "\n"
-        message += str(self.FRONT_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["RS_UP_DOWN"]]) + "\n"
-        message += str(self.BACK_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["RS_UP_DOWN"]]) + "\n"
+        message = str(self.FRONT_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]]) + "\n"
+        message += str(self.BACK_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]]) + "\n"
+        message += str(self.FRONT_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]]) + "\n"
+        message += str(self.BACK_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]]) + "\n"
 
         message += str(self.SENSOR_TOWER_BASE_MOTOR) + "," + str(self.__arm_motor_midpoint + ((controller_state.axes[self.axes["RT"]] - 1) / -2) * self.__motor_increment_value * self.__base_arm_inversion) + "\n"
         message += str(self.SENSOR_TOWER_TOP_MOTOR) + "," + str(511.0 + ((controller_state.axes[self.axes["LT"]] - 1) / -2) * 45.0 * self.__top_arm_inversion) + "\n"
 
-        message += str(self.ACTUATOR) + "," + str(self.__actuator_midpoint + self.__actuator_increment_value * ((controller_state.axes[self.axes["LT"]] - 1) / -2) * self.__actuator_inversion) + "\n"
+        message += str(self.ACTUATOR) + "," + str(self.__actuator_midpoint + self.__actuator_increment_value * ((controller_state.buttons[self.buttons["B"]] - 1) / -2) * self.__actuator_inversion) + "\n"
 
         if RobotInterface.artificial_delay_enabled:
             delay = gauss(self.mu, self.sigma)
@@ -593,10 +596,10 @@ class TransporterInterface(RobotInterface):
         #rospy.loginfo("Controller (" + str(controller_id) + ") Selected Robot: " + str(self.__my_name))
 
         #Build the message to send over UDP
-        message = str(self.FRONT_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["LS_UP_DOWN"]]) + "\n"
-        message += str(self.BACK_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["LS_UP_DOWN"]]) + "\n"
-        message += str(self.FRONT_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["RS_UP_DOWN"]]) + "\n"
-        message += str(self.BACK_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["RS_UP_DOWN"]]) + "\n"
+        message = str(self.FRONT_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]]) + "\n"
+        message += str(self.BACK_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]]) + "\n"
+        message += str(self.FRONT_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]]) + "\n"
+        message += str(self.BACK_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]]) + "\n"
 
         if RobotInterface.artificial_delay_enabled:
             delay = gauss(self.mu, self.sigma)
