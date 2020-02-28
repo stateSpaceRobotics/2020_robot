@@ -53,6 +53,7 @@ class RobotInterface:
         self.FRONT_RIGHT_DRIVE = 9
         self.BACK_RIGHT_DRIVE = 0
         self.BACK_LEFT_DRIVE = 8
+        self.TWIST_DRIVE = 12
 
         self.FRONT_LEFT_ACTUATOR = 6
         self.FRONT_RIGHT_ACTUATOR = 7
@@ -104,6 +105,7 @@ class DiggerInterface(RobotInterface):
         self.FRONT_RIGHT_DRIVE = 9
         self.BACK_RIGHT_DRIVE = 0
         self.BACK_LEFT_DRIVE = 8
+        self.TWIST_DRIVE = 12
 
         self.FRONT_LEFT_ACTUATOR = 6
         self.FRONT_RIGHT_ACTUATOR = 7
@@ -304,10 +306,11 @@ class DiggerInterface(RobotInterface):
                 rospy.loginfo("\n\n" + RobotInterface.controller1_outstring + "\n\n" + RobotInterface.controller2_outstring)
 
         #Build the message to send over UDP
-        message = str(self.FRONT_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["Drive_Y"]]) + "\n"
-        message += str(self.BACK_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["Drive_Y"]]) + "\n"
-        message += str(self.FRONT_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["Drive_Y"]] * -1) + "\n"
-        message += str(self.BACK_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["Drive_Y"]] * -1) + "\n"
+        message = str(self.FRONT_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["Drive_Y"]] / 32767) + "\n"
+        message += str(self.BACK_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["Drive_Y"]] / 32767) + "\n"
+        message += str(self.FRONT_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["Drive_Y"]] * -1 / 32767) + "\n"
+        message += str(self.BACK_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["Drive_Y"]] * -1 / 32767) + "\n"
+        message += str(self.TWIST_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["Twist"]] / 32767) + "\n"
 
         message += str(self.FRONT_LEFT_ACTUATOR) + "," + str(self.__actuator_midpoint + self.__actuator_increment_value * ((controller_state.buttons[self.buttons["B"]] - 1) / -2) * self.__front_actuator_inversion) + "\n"
         message += str(self.FRONT_RIGHT_ACTUATOR) + "," + str(self.__actuator_midpoint + self.__actuator_increment_value * ((controller_state.buttons[self.buttons["B"]] - 1) / -2) * self.__front_actuator_inversion) + "\n"
@@ -480,10 +483,11 @@ class DumperInterface(RobotInterface):
         #rospy.loginfo("Controller (" + str(controller_id) + ") Selected Robot: " + str(self.__my_name))
 
         #Build the message to send over UDP
-        message = str(self.FRONT_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]]) + "\n"
-        message += str(self.BACK_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]]) + "\n"
-        message += str(self.FRONT_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]]) + "\n"
-        message += str(self.BACK_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]]) + "\n"
+        message = str(self.FRONT_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]] / 32767) + "\n"
+        message += str(self.BACK_LEFT_DRIVE) + "," + str(self.__drive_motor_midpoint - self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]] / 32767) + "\n"
+        message += str(self.FRONT_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]] / -32767) + "\n"
+        message += str(self.BACK_RIGHT_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes[self.axes["DRIVE_Y"]] / -32767) + "\n"
+        message += str(self.TWIST_DRIVE) + "," + str(self.__drive_motor_midpoint + self.__drive_motor_increment_value * controller_state.axes{self.axes["Twist"]} / 32767) + "\n"
 
         message += str(self.SENSOR_TOWER_BASE_MOTOR) + "," + str(self.__arm_motor_midpoint + ((controller_state.axes[self.axes["RT"]] - 1) / -2) * self.__motor_increment_value * self.__base_arm_inversion) + "\n"
         message += str(self.SENSOR_TOWER_TOP_MOTOR) + "," + str(511.0 + ((controller_state.axes[self.axes["LT"]] - 1) / -2) * 45.0 * self.__top_arm_inversion) + "\n"
