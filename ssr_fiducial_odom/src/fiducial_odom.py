@@ -2,12 +2,12 @@
 
 import rospy
 import tf
-import geometry_msgs.msg 
+from geometry_msgs.msg import *
 from nav_msgs.msg import Odometry
 from fiducial_msgs.msg import FiducialTransformArray
 
 def fiducialTransformCallback(fid_transform):
-
+    global listener 
     
     try:
         #transform from map to camera
@@ -19,12 +19,12 @@ def fiducialTransformCallback(fid_transform):
             fid_pose = Pose(Point(transform.transform.translation.x, transform.transform.translation.y, transform.transform.translation.z), transform.transform.rotation)
             
             #transform pose from cam to map?
-            fid_pose_from_map = tf.transformPose('map', fid_pose)
+            fid_pose_from_map = listener.transformPose('map', fid_pose)
             
             rot = fid_pose_from_map.orientation
             trans = fid_pose_from_map.position
             #publish that $tuFf
-            br.sendTransform((trans.x, trans.y, trans.z), (rot.x, rot.y, rot.z, rot.w), rospy.Time.now(), "fiducial_" + str(transform.fiducial_id), "camera_link")
+            br.sendTransform((trans.x, trans.y, trans.z), (rot.x, rot.y, rot.z, rot.w), rospy.Time.now(), "fiducial_" + str(transform.fiducial_id), "map")
 
             #time.now may not be right
             #look at fiducial slam to see how it publishes 
